@@ -5,7 +5,7 @@ import { useCart } from "../../hooks/CartContext";
 
 
 export function CardProduct({ product }){
-const { putProductInCart} = useCart()
+const { putProductInCart } = useCart()
 
 return(
     <ContainerInfo>
@@ -13,9 +13,11 @@ return(
         <div>
             <p>{product.name}</p>
             <strong>{product.currencyValue}</strong>
+           
+
+
+<CartButton onClick={() => { putProductInCart(product); console.log('clicou'); }}> </CartButton>
             </div>
-            <CartButton onClick={() => putProductInCart(product)}></CartButton>
-       
     </ContainerInfo>
 );
 

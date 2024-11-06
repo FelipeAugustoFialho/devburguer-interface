@@ -10,6 +10,7 @@ border-radius: 5px;
 font-size: 30px;
 color:#ffffff;
 
+
 &:hover{
     background-color: #6f357c;
 }

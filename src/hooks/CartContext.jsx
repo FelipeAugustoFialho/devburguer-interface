@@ -5,9 +5,15 @@ const CartContext = createContext({});
 export const CartProvider = ({ children }) => {
   const [cartProducts, setCartProducts] = useState([]);
 
+
+  const updateCartState = (newProducts) => {
+    setCartProducts(newProducts);
+    localStorage.setItem('devburguer:cartInfo', JSON.stringify(newProducts));
+  };
+
+
   const putProductInCart = (product) => {
     const cartIndex = cartProducts.findIndex((prd) => prd.id === product.id);
-
     let newProductsInCart = [...cartProducts];
 
     if (cartIndex >= 0) {
@@ -16,51 +22,51 @@ export const CartProvider = ({ children }) => {
         quantity: newProductsInCart[cartIndex].quantity + 1,
       };
     } else {
-      product.quantity = 1;
-      newProductsInCart = [...newProductsInCart, product];
+      const newProduct = { ...product, quantity: 1 };
+      newProductsInCart = [...newProductsInCart, newProduct];
     }
-    setCartProducts(newProductsInCart);
-    updateLocalStorage(newProductsInCart);
+
+    updateCartState(newProductsInCart);
   };
+
+
 
   const clearCart = () => {
     setCartProducts([]);
-    updateLocalStorage([]);
+    
+    updateCartState([]);
   };
 
   const deleteProduct = (productId) => {
     const newCart = cartProducts.filter((prd) => prd.id !== productId);
-    setCartProducts(newCart);
-    updateLocalStorage(newCart);
+    updateCartState(newCart);
   };
+
+
 
   const increaseProduct = (productId) => {
     const newCart = cartProducts.map((prd) =>
       prd.id === productId ? { ...prd, quantity: prd.quantity + 1 } : prd
     );
-    setCartProducts(newCart);
-    updateLocalStorage(newCart);
+    updateCartState(newCart);
   };
+
+
 
   const decreaseProduct = (productId) => {
     const cartIndex = cartProducts.findIndex((prd) => prd.id === productId);
-
-    if (cartProducts[cartIndex].quantity > 1) {
+    
+    if (cartIndex >= 0 && cartProducts[cartIndex].quantity > 1) {
       const newCart = cartProducts.map((prd) =>
-        prd.id === productId
-          ? { ...prd, quantity: prd.quantity - 1 }
-          : prd
+        prd.id === productId ? { ...prd, quantity: prd.quantity - 1 } : prd
       );
-      setCartProducts(newCart);
-      updateLocalStorage(newCart);
+      updateCartState(newCart);
     } else {
       deleteProduct(productId);
     }
   };
 
-  const updateLocalStorage = (products) => {
-    localStorage.setItem('devburguer:cartInfo', JSON.stringify(products));
-  };
+
 
   useEffect(() => {
     const clientCartData = localStorage.getItem('devburguer:cartInfo');
@@ -84,6 +90,8 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
+
 
 export const useCart = () => {
   const context = useContext(CartContext);

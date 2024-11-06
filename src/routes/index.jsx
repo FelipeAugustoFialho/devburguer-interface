@@ -1,14 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import React from 'react';
-import { Login } from '../containers/Login';
-import { Register } from "../containers/Register";
-import { Home } from "../containers/Home";
+
+import { Login,Register,Home,Menu,Cart, CompletePayment, Checkout } from '../containers';
+
 import { UserProvider } from '../hooks/UserContext';
-import { Menu } from '../containers/Menu';
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { CardsThree } from "@phosphor-icons/react/dist/ssr";
-import { Cart } from "../containers/Cart";
+
+
 
 // Definindo o roteamento usando createBrowserRouter
 export const router = createBrowserRouter([
@@ -47,6 +45,21 @@ export const router = createBrowserRouter([
     {
         path: '/carrinho',
         element:  <Cart/>,
+           
+                          
+       
+    },
+    {
+        path: '/checkout',
+        element:  <Checkout/>,
+           
+                          
+       
+    },
+
+    {
+        path: '/complete',
+        element:  <CompletePayment/>,
            
                           
        

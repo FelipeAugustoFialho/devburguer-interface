@@ -1,6 +1,6 @@
 import Logo from '../../assets/logoCarrinho.png';
-import { Title } from '../Login/styles';
-import { Banner, Container, Content } from './styles';
+import { CartItems , CartResume } from '../../components';
+import { Banner, Container, Content,Title } from './styles';
 
 
 export function Cart() {
